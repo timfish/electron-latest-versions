@@ -1,0 +1,20 @@
+{
+  "name": "electron-latest-versions",
+  "version": "0.1.0",
+  "description": "Get the latest versions of Electron for a range of major versions",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "author": "Tim Fish <tim@timfish.uk>",
+  "repository": "https://github.com/timfish/electron-latest-versions.git",
+  "license": "MIT",
+  "bin": {
+    "electron-latest-versions": "./dist/bin.js"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.7",
+    "typescript": "^4.4.4"
+  }
+}
