@@ -21,5 +21,5 @@ const beta = args.includes("--beta");
 const alpha = args.includes("--alpha");
 
 getLatestVersions({ start, end, last, beta, alpha }).then((versions) =>
-  console.log(JSON.stringify(versions, null, "  "))
+  console.log(JSON.stringify(versions))
 );
