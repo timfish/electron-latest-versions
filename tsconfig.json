@@ -16,7 +16,8 @@
         "noUncheckedIndexedAccess": true,
         "sourceMap": true,
         "outDir": "./dist",
-        "moduleResolution": "node"
+        "moduleResolution": "node",
+        "newLine": "lf"
     },
     "include": [
         "src/**/*"
