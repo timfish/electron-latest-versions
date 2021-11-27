@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { getLatestVersions } from ".";
 
 const args = process.argv.join(" ");
