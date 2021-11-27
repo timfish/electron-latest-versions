@@ -1,6 +1,6 @@
 {
   "name": "electron-latest-versions",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Get the latest versions of Electron for a range of major versions",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -8,7 +8,7 @@
   "repository": "https://github.com/timfish/electron-latest-versions.git",
   "license": "MIT",
   "bin": {
-    "electron-latest-versions": "node ./dist/bin.js"
+    "electron-latest-versions": "./dist/bin.js"
   },
   "scripts": {
     "build": "tsc"
