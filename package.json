@@ -1,6 +1,6 @@
 {
   "name": "electron-latest-versions",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Get the latest versions of Electron for a range of major versions",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

@@ -52,8 +52,6 @@ export async function getLatestVersions(options: Options): Promise<string[]> {
 
     if (found) {
       output.push(found.version);
-    } else {
-      break;
     }
   }
 
