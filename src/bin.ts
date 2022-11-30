@@ -19,7 +19,8 @@ const last = getArgNum("last");
 
 const beta = args.includes("--beta");
 const alpha = args.includes("--alpha");
+const nightly = args.includes("--nightly");
 
-getLatestVersions({ start, end, last, beta, alpha }).then((versions) =>
+getLatestVersions({ start, end, last, beta, alpha, nightly }).then((versions) =>
   console.log(JSON.stringify(versions))
 );

@@ -1,13 +1,16 @@
 import * as https from "https";
+import * as semver from "semver";
 
 function get(url: string): Promise<string> {
   return new Promise((resolve, reject) => {
     https.get(url, (res) => {
-      if (res.statusCode === 301 || res.statusCode === 302) {
-        const host = new URL(url).host;
-        return get(`https://${host}${res.headers.location}`)
-          .then(resolve)
-          .catch(reject);
+      if (
+        (res.statusCode === 301 ||
+          res.statusCode === 302 ||
+          res.statusCode === 307) &&
+        res.headers.location
+      ) {
+        return get(res.headers.location).then(resolve).catch(reject);
       }
 
       let data: Buffer[] = [];
@@ -25,33 +28,41 @@ export interface Options {
   last?: number;
   beta?: boolean;
   alpha?: boolean;
+  nightly?: boolean;
 }
 
 export async function getLatestVersions(options: Options): Promise<string[]> {
-  const json = await get("https://unpkg.com/electron-releases/lite.json");
+  const json = await get("https://www.electronjs.org/headers/index.json");
   const releases = JSON.parse(json) as {
     version: string;
-    npm_dist_tags: string[];
   }[];
 
-  const output = [];
+  const versions = releases.map((r) => r.version);
+
+  const output: string[] = [];
   const end = options.end || 1000;
 
   for (let v = options.start || 1; v <= end; v++) {
-    const found = releases.find((release) =>
-      release.npm_dist_tags.some((tag) =>
-        options.alpha
-          ? tag.startsWith(`${v}-`) ||
-            tag.startsWith(`beta-${v}-`) ||
-            tag.startsWith(`alpha-${v}-`)
-          : options.beta
-          ? tag.startsWith(`${v}-`) || tag.startsWith(`beta-${v}-`)
-          : tag.startsWith(`${v}-`)
-      )
-    );
+    let found = versions
+      .filter((version) => semver.major(version) === v)
+      .filter((version) => !version.includes("unsupported"));
 
-    if (found) {
-      output.push(found.version);
+    if (!options.beta) {
+      found = found.filter((version) => !version.includes("beta"));
+    }
+
+    if (!options.alpha) {
+      found = found.filter((version) => !version.includes("alpha"));
+    }
+
+    if (!options.nightly) {
+      found = found.filter((version) => !version.includes("nightly"));
+    }
+
+    found = found.sort(semver.rcompare);
+
+    if (found.length > 0) {
+      output.push(found[0] as string);
     }
   }
 
